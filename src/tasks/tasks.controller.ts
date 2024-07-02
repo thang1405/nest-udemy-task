@@ -8,6 +8,7 @@ import {
   Patch,
   Delete,
   UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import {
@@ -23,16 +24,23 @@ import { GetUser } from 'src/auth/get-user.decorator';
 @Controller('/tasks')
 @UseGuards(AuthGuard())
 export class TasksController {
+  private logger = new Logger('TasksController');
+
   constructor(private tasksService: TasksService) {}
 
   @Get()
   getTasks(
-    @Query() query: CFilterTaskDto,
+    @Query() filterDto: CFilterTaskDto,
     @GetUser() user: UserEntity,
   ): Promise<TaskEntity[]> {
     // TODO: if we have nay filters defined will filter
     // otherwise, we will return all the tasks
-    return this.tasksService.getTasks(query, user);
+    this.logger.verbose(
+      `User "${user.username}" retrieving all tasks. Filters: ${JSON.stringify(
+        filterDto,
+      )}`,
+    );
+    return this.tasksService.getTasks(filterDto, user);
   }
 
   @Get(':id')
@@ -46,6 +54,11 @@ export class TasksController {
 
   @Post()
   createTask(@Body() createDto: CCreateTaskDto, @GetUser() user: UserEntity) {
+    this.logger.verbose(
+      `User "${user.username}" creating a new task. Data: ${JSON.stringify(
+        createDto,
+      )}`,
+    );
     return this.tasksService.createTask(createDto, user);
   }
 

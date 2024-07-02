@@ -63,6 +63,8 @@ $ yarn run test:cov
 
 interceptor - https://gist.github.com/arielweinberger/f5c02406b48bb0e145e8542c7006649f
 
+frontend - https://github.com/arielweinberger/task-management-frontend
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).

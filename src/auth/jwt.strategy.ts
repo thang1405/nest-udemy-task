@@ -3,9 +3,10 @@ import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
-import { JwtService } from '@nestjs/jwt';
+// import { JwtService } from '@nestjs/jwt';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtPayload } from './auth.interface';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -13,10 +14,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
 
-    private jwtService: JwtService,
+    private configService: ConfigService,
   ) {
     super({
-      secretOrKey: 'secret_nah_1234',
+      secretOrKey: configService.get('JWT_SECRET'),
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
   }
