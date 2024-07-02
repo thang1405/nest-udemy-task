@@ -56,7 +56,12 @@ $ yarn run test:e2e
 
 # test coverage
 $ yarn run test:cov
+
 ```
+
+## Resources
+
+interceptor - https://gist.github.com/arielweinberger/f5c02406b48bb0e145e8542c7006649f
 
 ## Support
 
